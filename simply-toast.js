@@ -1,13 +1,18 @@
+// TODO Rewrite without JQuery!
+// TODO If a stack of items exists, move other items to top after closing
 (function()
 {
     $.simplyToast = function(message, type, options)
     {
         options = $.extend(true, {}, $.simplyToast.defaultOptions, options);
 
-        var html = '<div class="simply-toast alert alert-' + (type ? type : options.type) + ' ' + (options.customClass ? options.customClass : '') +'">';
+        var html = '<div class="simply-toast alert alert-' +
+            (type ? type : options.type) +
+            (options.allowDismiss ? ' alert-dismissible fade show ' : ' ') +
+            (options.customClass ? options.customClass : '') + '" role="alert">';
         html += message;
         if(options.allowDismiss) {
-            html += '<button type="button" class="btn-close" data-dismiss="alert"></button>';
+            html += '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
         }
         html += '</div>';
 
@@ -70,7 +75,7 @@
             setTimeout(removeAlert, options.delay);
         }
 
-        $alert.find("[data-dismiss=\"alert\"]").removeAttr('data-dismiss').click(removeAlert);
+        $alert.find("[data-bs-dismiss=\"alert\"]").removeAttr('data-bs-dismiss').click(removeAlert);
 
         return $alert;
     };
